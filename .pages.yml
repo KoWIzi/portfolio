@@ -1,0 +1,63 @@
+# Configuration de l'éditeur Pages CMS (https://app.pagescms.org)
+media:
+  input: images
+  output: /images
+  rename: safe
+
+content:
+  - name: projets
+    label: Projets
+    description: "Du plus récent (en haut) au plus ancien. Images au format 4:5 (ex. 1080 × 1350 px)."
+    type: file
+    path: data/projects.json
+    format: json
+    list: true
+    fields:
+      - name: title
+        label: Titre
+        type: string
+        required: true
+      - name: year
+        label: Année
+        type: number
+        required: true
+      - name: type_fr
+        label: Type (français)
+        type: string
+        description: "Ex. Affiche, Identité visuelle, Photographie, Jeu vidéo"
+      - name: type_en
+        label: Type (anglais)
+        type: string
+        description: "Ex. Poster, Visual identity, Photography, Video game"
+      - name: text_fr
+        label: Description (français)
+        type: text
+        description: "Texte du post-it. Laisse une ligne vide entre deux paragraphes."
+      - name: text_en
+        label: Description (anglais)
+        type: text
+      - name: images
+        label: Photos
+        type: image
+        list: true
+        description: "Dans l'ordre d'affichage. Format 4:5."
+      - name: placeholders
+        label: Rectangles gris (si pas encore de photos)
+        type: number
+        description: "Nombre de rectangles gris affichés tant qu'il n'y a pas de photos. Laisse vide sinon."
+
+  - name: site
+    label: À propos et contact
+    type: file
+    path: data/site.json
+    format: json
+    fields:
+      - name: about_fr
+        label: À propos (français)
+        type: text
+      - name: about_en
+        label: À propos (anglais)
+        type: text
+      - name: email
+        label: E-mail
+        type: string

@@ -1,0 +1,295 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Portfolio Bastien Mouquet</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap">
+<style>
+/* Layout (schémas de Bastien) : image 4:5 au centre, légende dessous, un post-it jaune dépasse derrière l'image et sort au survol avec la description.
+   Quatre coins : B. MOUQUET (à propos), FR/EN, GALERIE, INDEX. Bleu pur sur blanc, Montserrat. Un seul thème volontaire. */
+:root{
+  --bg:#ffffff;
+  --blue:#0000ff;
+  --ph:#eef0fb;
+  --ph-line:#c9cdf2;
+  --yellow:#f3e48e;                   /* jaune post-it, adouci */
+  --yellow-2:#ecd97a;
+  --pi:clamp(230px, calc((100vw - var(--W)) / 2 - 44px), 360px);              /* côté du post-it */
+  --peek:34px;                        /* partie visible derrière l'image */
+  --font:"Montserrat","Helvetica Neue",Arial,sans-serif;
+  --side:max(24px, env(safe-area-inset-left, 0px));
+  --side-r:max(24px, env(safe-area-inset-right, 0px));
+  --panel:350px;                      /* largeur du texte de description */
+  --H:min(calc(100vh - 136px), calc((100vw - 140px) * 1.25));
+  --W:calc(var(--H) * 0.8);           /* format 1080 × 1350 = 4:5 */
+  --ease:cubic-bezier(.65,0,.35,1);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--blue);font-family:var(--font);font-size:15px;line-height:1.35;overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-transform:inherit;letter-spacing:inherit;text-align:left}
+button:focus-visible{outline:1px solid var(--blue);outline-offset:3px}
+.up{text-transform:uppercase;letter-spacing:.02em}
+
+/* quatre coins */
+.corner{position:fixed;z-index:12;text-transform:uppercase;letter-spacing:.02em;background:var(--bg);box-shadow:0 0 0 6px var(--bg)}
+.tl{top:calc(20px + env(safe-area-inset-top, 0px));left:var(--side);font-weight:500;font-size:18px}
+.tr{top:calc(22px + env(safe-area-inset-top, 0px));right:var(--side-r)}
+.bl{bottom:calc(20px + env(safe-area-inset-bottom, 0px));left:var(--side)}
+.br{bottom:calc(20px + env(safe-area-inset-bottom, 0px));right:var(--side-r)}
+.lang button{opacity:.35;transition:opacity .2s}.lang button.on{opacity:1}
+body.in-gallery .tr,body.in-gallery .br{opacity:0;pointer-events:none}
+/* superpositions : galerie 10 < bouton Galerie 11 < à propos 12 < B. MOUQUET 13 ; FR/EN 11 < index 12 < bouton Index 13 */
+.tl,.br{z-index:13}.bl,.tr{z-index:11}
+.bl{transition:opacity .3s}
+.tr,.br{transition:opacity .3s}
+
+/* zone de clic plein écran (curseur = compteur) */
+.stage{position:fixed;inset:0;z-index:1;cursor:none;user-select:none}
+
+/* image centrale + légende + description */
+.frame{position:fixed;z-index:2;left:50%;top:calc(50% - 16px);width:var(--W);height:var(--H);transform:translate(-50%,-50%);pointer-events:none}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .5s ease}
+.slide.in{opacity:1}
+.ph{width:100%;height:100%;background:var(--ph);display:grid;place-items:center;outline:1px solid var(--ph-line);outline-offset:-1px;text-align:center;font-size:13px}
+.ph span{opacity:.6}
+.slide img{width:100%;height:100%;object-fit:cover;display:block}
+
+.caption{position:absolute;top:calc(100% + 14px);left:0;display:grid;grid-auto-flow:column;column-gap:32px;align-items:baseline;white-space:nowrap}
+.caption .t{text-transform:none;letter-spacing:0}
+.caption .count{display:none}
+.measure{position:absolute;visibility:hidden;white-space:nowrap;left:-9999px;top:0}
+
+.slides{position:absolute;inset:0;z-index:2;pointer-events:auto;cursor:none}
+
+/* post-it : caché derrière l'image, il dépasse de --peek et sort au survol */
+.postit{position:absolute;z-index:1;top:9%;left:calc(100% - var(--pi));width:var(--pi);aspect-ratio:1;pointer-events:auto;cursor:pointer;
+  background:linear-gradient(160deg,var(--yellow) 0%,var(--yellow) 70%,var(--yellow-2) 100%);
+  box-shadow:0 1px 2px rgba(60,50,0,.10),0 8px 18px -6px rgba(60,50,0,.18);
+  transform:translateX(var(--peek)) rotate(1.2deg);transition:transform .7s var(--ease)}
+.postit:hover,.postit.open{transform:translateX(calc(var(--pi) + 18px)) rotate(-1deg)}
+.postit .mark{position:absolute;right:11px;top:14px;font-size:18px;line-height:1;transition:transform .6s var(--ease)}
+.postit:hover .mark,.postit.open .mark{transform:rotate(180deg)}
+.postit .pt{position:absolute;inset:18px 34px 16px 20px;overflow:auto;font-size:12.5px;line-height:1.4}
+.postit .pt p{margin:0 0 8px}
+
+.cursor{position:fixed;left:0;top:0;pointer-events:none;z-index:20;transform:translate(-50%,-50%);white-space:nowrap;font-weight:500;text-transform:uppercase;letter-spacing:.02em;display:none}
+.cursor.show{display:block}
+
+/* panneaux : à propos depuis la gauche, index depuis la droite, galerie depuis le bas */
+.panel{position:fixed;background:var(--bg);z-index:10;overflow:auto;visibility:hidden;
+  transition:transform .7s var(--ease), visibility 0s linear .7s;box-shadow:0 0 0 1px rgba(0,0,255,.08)}
+.panel.open{transform:none!important;visibility:visible;transition:transform .7s var(--ease), visibility 0s}
+#about{z-index:12;top:0;bottom:0;left:0;width:min(520px,100%);transform:translateX(-100%);
+  padding:calc(76px + env(safe-area-inset-top, 0px)) 24px 80px var(--side)}
+#index{z-index:12;top:0;bottom:0;right:0;width:min(640px,100%);transform:translateX(100%);
+  padding:calc(76px + env(safe-area-inset-top, 0px)) var(--side-r) 80px 24px}
+#gallery{inset:0;transform:translateY(100%);
+  padding:calc(76px + env(safe-area-inset-top, 0px)) var(--side-r) calc(76px + env(safe-area-inset-bottom, 0px)) var(--side)}
+.veil{position:fixed;inset:0;z-index:9;background:rgba(255,255,255,.6);opacity:0;pointer-events:none;transition:opacity .5s}
+.veil.on{opacity:1;pointer-events:auto}
+
+.about h2{font-size:inherit;font-weight:500;text-transform:uppercase;margin:0 0 20px;letter-spacing:.02em}
+.about h2+p{margin-top:0}
+.about p{margin:0 0 14px;max-width:60ch}
+.about section+section{margin-top:40px}
+
+.idx{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.idx td{padding:4px 24px 4px 0;vertical-align:top;white-space:nowrap}
+.idx td.t{white-space:normal;width:55%}
+.idx tbody tr{cursor:pointer;transition:opacity .2s}
+.idx tbody:hover tr{opacity:.25}
+.idx tbody:hover tr:hover{opacity:1}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.thumb{cursor:pointer;transition:opacity .2s}
+.grid:hover .thumb{opacity:.3}
+.grid:hover .thumb.hot{opacity:1}
+.thumb .ph,.thumb img{aspect-ratio:4/5;width:100%;height:auto;object-fit:cover}
+.thumb .ph{font-size:11px}
+.note-cell{cursor:pointer;aspect-ratio:4/5;display:flex;align-items:flex-start;transition:opacity .2s}
+.grid:hover .note-cell{opacity:.3}
+.grid:hover .note-cell.hot{opacity:1}
+.note-cell .sq{width:100%;aspect-ratio:1;padding:12px;font-size:14px;line-height:1.3;
+  background:linear-gradient(160deg,var(--yellow) 0%,var(--yellow) 70%,var(--yellow-2) 100%);
+  box-shadow:0 1px 2px rgba(60,50,0,.10),0 6px 14px -6px rgba(60,50,0,.18)}
+
+.note{position:fixed;left:50%;transform:translateX(-50%);top:calc(24px + env(safe-area-inset-top, 0px));font-size:12px;opacity:.5;z-index:3;pointer-events:none}
+
+/* téléphone : image pleine largeur, description par-dessus en bas */
+@media (max-width:860px){
+  :root{--W:min(calc(100vw - 32px), calc((100vh - 200px) * .8));--H:calc(var(--W) * 1.25)}
+  .caption{grid-auto-flow:row;grid-template-columns:auto auto!important;column-gap:16px;white-space:normal}
+  .caption .count{display:inline}
+  .stage{cursor:auto}
+  :root{--pi:min(300px, 78vw)}
+  .postit{top:calc(100% - var(--pi));left:auto;right:12px;transform:translateY(var(--peek)) rotate(1.2deg)}
+  .postit:hover,.postit.open{transform:translateY(-12px) rotate(-1deg)}
+  .postit.open{z-index:3}
+  .postit .mark{top:auto;bottom:10px;transform:rotate(-90deg)}
+  .postit:hover .mark,.postit.open .mark{transform:rotate(90deg)}
+  .caption{padding-top:calc(var(--peek) + 6px);padding-right:0}
+  .note{display:none}
+}
+@media (hover:none){.cursor{display:none!important}.caption .count{display:inline}.stage{cursor:auto}}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0s!important;transition-delay:0s!important}}
+</style>
+
+
+<button class="corner tl" id="btn-about">B. Mouquet</button>
+<div class="corner tr lang"><button id="fr" class="on">FR</button> / <button id="en">EN</button></div>
+<button class="corner bl" id="btn-gallery">Galerie</button>
+<button class="corner br" id="btn-index">Index</button>
+
+<div class="stage" id="stage"></div>
+<div class="cursor" id="cursor"></div>
+
+<div class="frame" id="frame">
+  <div class="slides" id="slides"></div>
+  <div class="caption up" id="caption">
+    <span class="t" id="c-title"></span><span id="c-year"></span><span id="c-type"></span><span class="count" id="c-count"></span>
+  </div>
+  <div class="postit" id="postit" role="button" tabindex="0" aria-label="Description"><span class="mark">&gt;</span><div class="pt" id="desc"></div></div>
+</div>
+<span class="measure up" id="measure"></span>
+
+<div class="veil" id="veil"></div>
+<section class="panel about" id="about" aria-label="À propos"></section>
+<section class="panel" id="index" aria-label="Index"><table class="idx" id="idx"></table></section>
+<section class="panel" id="gallery" aria-label="Galerie"><div class="grid" id="grid"></div></section>
+
+<script>
+/* Les contenus ne sont plus ici : ils sont dans data/projects.json (projets) et data/site.json (à propos, contact).
+   On les modifie avec l'éditeur, sans toucher à ce fichier. */
+let projects = [];
+const NEXT_FOR_SINGLE = true; // un projet d'une seule image affiche « suivant » au lieu de « 1/1 »
+
+const ui = {
+  fr:{close:"Fermer",gallery:"Galerie",index:"Index",next:"suivant",prev:"précédent",soon:"Texte à venir.",img:"image"},
+  en:{close:"Close",gallery:"Gallery",index:"Index",next:"next",prev:"previous",soon:"Text coming soon.",img:"image"}
+};
+let about = {fr:"",en:""};
+const esc=t=>String(t||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const paras=t=>esc(t).split(/\n\s*\n/).filter(x=>x.trim()).map(x=>`<p>${x.replace(/\n/g,"<br>")}</p>`).join("");
+function buildAbout(d){
+  const mail=`<section><h2>Contact</h2><p>${esc(d.email)}</p></section>`;
+  about={fr:`<section><h2>À propos</h2>${paras(d.about_fr)}</section>${mail}`,
+         en:`<section><h2>About</h2>${paras(d.about_en||d.about_fr)}</section>${mail}`};
+}
+function normalize(list){
+  return list.map(x=>{const images=(x.images||[]).map(im=>typeof im==="string"?im:im&&im.image).filter(Boolean).map(u=>/^https?:/.test(u)?u:u.replace(/^\/+/,""));
+    const tf=(x.text_fr||"").trim(), te=(x.text_en||"").trim();
+    return {title:esc(x.title), year:x.year, type:{fr:esc(x.type_fr),en:esc(x.type_en||x.type_fr)},
+      text:(tf||te)?{fr:paras(tf||te),en:paras(te||tf)}:null, images, imgs:images.length||x.placeholders||1};
+  });
+}
+
+let lang="fr", p=0, i=0, back=false, stack=[];
+const isOpen=()=>stack.length>0;
+const $=s=>document.querySelector(s);
+const cursor=$("#cursor");
+const corners={"#about":["#btn-about",()=>"B. Mouquet"],"#index":["#btn-index",()=>ui[lang].index],"#gallery":["#btn-gallery",()=>ui[lang].gallery]};
+
+function count(){const n=projects[p].imgs;return (n===1&&NEXT_FOR_SINGLE)?ui[lang].next:`${i+1}/${n}`}
+function media(pr,k,cls=""){const src=pr.images&&pr.images[k];
+  return src?`<img src="${src}" alt="${pr.title}, ${ui[lang].img} ${k+1}" loading="lazy">`:`<div class="ph ${cls}"><span>${pr.title}<br>${ui[lang].img} ${k+1}/${pr.imgs}</span></div>`}
+
+/* largeur fixe de chaque colonne de la légende = le mot le plus long, FR et EN */
+function fixColumns(){
+  const m=$("#measure"), w=(t,up)=>{m.style.textTransform=up?"uppercase":"none";m.style.letterSpacing=up?".02em":"0";m.textContent=t;return Math.ceil(m.getBoundingClientRect().width)+1};
+  const L=["fr","en"];
+  $("#caption").style.gridTemplateColumns=[
+    Math.max(...projects.map(x=>w(x.title,false))),
+    Math.max(...projects.map(x=>w(String(x.year),true))),
+    Math.max(...projects.flatMap(x=>L.map(l=>w(x.type[l],true)))),
+    Math.max(...projects.map(x=>w(`${x.imgs}/${x.imgs}`,true)),...L.map(l=>w(ui[l].next,true)))
+  ].map(c=>c+"px").join(" ");
+}
+
+function showSlide(){
+  const box=$("#slides"), old=[...box.children], s=document.createElement("div");
+  s.className="slide"; s.innerHTML=media(projects[p],i); box.appendChild(s);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>s.classList.add("in")));
+  old.forEach(o=>{o.classList.remove("in");setTimeout(()=>o.remove(),550)});
+}
+function renderText(){
+  const pr=projects[p];
+  $("#c-title").textContent=pr.title;$("#c-year").textContent=pr.year;$("#c-type").textContent=pr.type[lang];$("#c-count").textContent=count();
+  $("#desc").innerHTML=pr.text?pr.text[lang]:`<p>${ui[lang].soon}</p>`;
+  setCursor(back);
+}
+function setCursor(b){back=b;cursor.textContent=b?ui[lang].prev:count()}
+function render(){showSlide();renderText();if(typeof postit!=='undefined')postit.classList.remove('open')}
+function next(){if(i<projects[p].imgs-1)i++;else{p=(p+1)%projects.length;i=0}render()}
+function prev(){if(i>0)i--;else{p=(p-1+projects.length)%projects.length;i=projects[p].imgs-1}render()}
+function go(k,img=0){p=k;i=img;closePanels();render()}
+function closeNote(){postit.classList.remove("open")}
+
+function renderIndex(){
+  $("#idx").innerHTML="<tbody>"+projects.map((pr,k)=>`<tr data-k="${k}"><td>[${String(k+1).padStart(2,"0")}]</td><td>${pr.year}</td><td class="t">${pr.title}</td><td>${pr.type[lang]}</td></tr>`).join("")+"</tbody>";
+  $("#idx").querySelectorAll("tr").forEach(tr=>tr.onclick=()=>go(+tr.dataset.k));
+}
+function renderGallery(){
+  let h="";
+  projects.forEach((pr,k)=>{
+    h+=`<div class="note-cell" data-k="${k}" data-j="0"><div class="sq" style="transform:rotate(${[-1.5,1,-.6,1.4][k%4]}deg)">${pr.title}<br>${pr.year}</div></div>`;
+    for(let j=0;j<pr.imgs;j++)h+=`<div class="thumb" data-k="${k}" data-j="${j}">${media(pr,j)}</div>`});
+  $("#grid").innerHTML=h;
+  $("#grid").querySelectorAll(".thumb,.note-cell").forEach(t=>{
+    t.onclick=()=>go(+t.dataset.k,+t.dataset.j);
+    t.onmouseenter=()=>$("#grid").querySelectorAll(`[data-k="${t.dataset.k}"]`).forEach(x=>x.classList.add("hot"));
+    t.onmouseleave=()=>$("#grid").querySelectorAll(".hot").forEach(x=>x.classList.remove("hot"));
+  });
+}
+function labels(){
+  Object.entries(corners).forEach(([id,[btn,lab]])=>$(btn).textContent=stack.includes(id)?ui[lang].close:lab());
+  document.body.classList.toggle("in-gallery",stack.includes("#gallery"));
+  document.body.classList.toggle("both",stack.length===2);
+  $("#veil").classList.toggle("on",isOpen()&&!(stack.length===2));
+}
+/* l'à propos peut s'ouvrir par-dessus la galerie ; les autres panneaux se remplacent */
+function openPanel(id){
+  if(stack.includes(id))return closePanel(id);
+  if(!(id==="#about"&&stack.length===1&&stack[0]==="#gallery"))closePanels();
+  stack.push(id);$(id).classList.add("open");labels();
+}
+function closePanel(id){stack=stack.filter(x=>x!==id);$(id).classList.remove("open");labels()}
+function closeTop(){if(isOpen())closePanel(stack[stack.length-1])}
+function closePanels(){document.querySelectorAll(".panel").forEach(x=>x.classList.remove("open"));stack=[];labels()}
+function setLang(l){
+  lang=l;$("#fr").classList.toggle("on",l==="fr");$("#en").classList.toggle("on",l==="en");document.documentElement.lang=l;
+  $("#about").innerHTML=about[l];renderIndex();renderGallery();renderText();labels();
+}
+
+const isBack=x=>x<innerWidth*0.3;
+const stage=$("#stage"), slides=$("#slides"), postit=$("#postit");
+[stage,slides].forEach(el=>el.addEventListener("click",e=>isBack(e.clientX)?prev():next()));
+addEventListener("mousemove",e=>{
+  const on=e.target===stage||slides.contains(e.target);
+  cursor.classList.toggle("show",on);
+  if(on){cursor.style.left=e.clientX+"px";cursor.style.top=e.clientY+"px";setCursor(isBack(e.clientX))}
+});
+document.addEventListener("mouseleave",()=>cursor.classList.remove("show"));
+postit.onclick=e=>{e.stopPropagation();postit.classList.toggle("open")};
+postit.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();postit.classList.toggle("open")}};
+$("#btn-about").onclick=()=>openPanel("#about");
+$("#btn-index").onclick=()=>openPanel("#index");
+$("#btn-gallery").onclick=()=>openPanel("#gallery");
+$("#veil").onclick=closeTop;
+$("#fr").onclick=()=>setLang("fr");$("#en").onclick=()=>setLang("en");
+addEventListener("keydown",e=>{
+  if(e.key==="Escape")closeTop();
+  if(isOpen())return;
+  if(e.key==="ArrowRight")next();if(e.key==="ArrowLeft")prev();
+});
+Promise.all([fetch("data/projects.json").then(r=>r.json()),fetch("data/site.json").then(r=>r.json())])
+  .then(([pj,site])=>{
+    projects=normalize(Array.isArray(pj)?pj:(pj.projects||[])); buildAbout(site);
+    setLang("fr");render();fixColumns();
+    document.fonts&&document.fonts.ready.then(fixColumns);
+  })
+  .catch(()=>{document.body.insertAdjacentHTML("beforeend",'<p style="position:fixed;inset:auto 0 50%;text-align:center">Le site doit être ouvert en ligne (ou via un petit serveur local) pour lire data/projects.json.</p>')});
+</script>
