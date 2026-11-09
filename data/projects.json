@@ -31,28 +31,7 @@
     "placeholders": 0
   },
   {
-    "title": "Hommage contemporain",
-    "year": 2025,
-    "type_fr": "Affiches",
-    "type_en": "Posters",
-    "placeholders": 3
-  },
-  {
-    "title": "Hommage historique à Grapus",
-    "year": 2025,
-    "type_fr": "Carré de soie",
-    "type_en": "Silk square",
-    "placeholders": 2
-  },
-  {
     "title": "Cocollections",
-    "year": 2025,
-    "type_fr": "Photographie",
-    "type_en": "Photography",
-    "placeholders": 3
-  },
-  {
-    "title": "Mont Saint Michel",
     "year": 2025,
     "type_fr": "Photographie",
     "type_en": "Photography",
@@ -66,34 +45,11 @@
     "placeholders": 2
   },
   {
-    "title": "RVeG",
-    "year": 2025,
-    "type_fr": "Photographie",
-    "type_en": "Photography",
-    "text_fr": "Photos réalisées lors de la représentation d'un étrange employé de bureau répondant au patronyme non moins curieux de RVeG, qui est venu à Ravisius Textor pour la fête de la musique donner un magnifique concert, entre musique concrète, techno et musique industrielle.",
-    "text_en": "Photos taken during the performance of a strange office worker going by the no less curious name of RVeG, who came to Ravisius Textor for the Fête de la musique to give a wonderful concert, somewhere between musique concrète, techno and industrial music.",
-    "placeholders": 4
-  },
-  {
     "title": "Vitraux et Biomatériaux",
     "year": 2025,
     "type_fr": "Photographie",
     "type_en": "Photography",
     "placeholders": 1
-  },
-  {
-    "title": "Watkins",
-    "year": 2024,
-    "type_fr": "Typographie",
-    "type_en": "Typography",
-    "placeholders": 2
-  },
-  {
-    "title": "Seven Samurai",
-    "year": 2024,
-    "type_fr": "Affiches",
-    "type_en": "Posters",
-    "placeholders": 3
   },
   {
     "title": "Faire courant commun",
