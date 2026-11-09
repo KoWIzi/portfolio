@@ -11,40 +11,47 @@ content:
     type: file
     path: data/projects.json
     format: json
-    list: true
     fields:
-      - name: title
-        label: Titre
-        type: string
-        required: true
-      - name: year
-        label: Année
-        type: number
-        required: true
-      - name: type_fr
-        label: Type (français)
-        type: string
-        description: "Ex. Affiche, Identité visuelle, Photographie, Jeu vidéo"
-      - name: type_en
-        label: Type (anglais)
-        type: string
-        description: "Ex. Poster, Visual identity, Photography, Video game"
-      - name: text_fr
-        label: Description (français)
-        type: text
-        description: "Texte du post-it. Laisse une ligne vide entre deux paragraphes."
-      - name: text_en
-        label: Description (anglais)
-        type: text
-      - name: images
-        label: Photos
-        type: image
-        list: true
-        description: "Dans l'ordre d'affichage. Format 4:5."
-      - name: placeholders
-        label: Rectangles gris (si pas encore de photos)
-        type: number
-        description: "Nombre de rectangles gris affichés tant qu'il n'y a pas de photos. Laisse vide sinon."
+      - name: projects
+        label: Projets
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{year} · {title}"
+        fields:
+          - name: title
+            label: Titre
+            type: string
+            required: true
+          - name: year
+            label: Année
+            type: number
+            required: true
+          - name: type_fr
+            label: Type (français)
+            type: string
+            description: "Ex. Affiche, Identité visuelle, Photographie, Jeu vidéo"
+          - name: type_en
+            label: Type (anglais)
+            type: string
+            description: "Ex. Poster, Visual identity, Photography, Video game"
+          - name: text_fr
+            label: Description (français)
+            type: text
+            description: "Texte du post-it. Laisse une ligne vide entre deux paragraphes."
+          - name: text_en
+            label: Description (anglais)
+            type: text
+          - name: images
+            label: Photos
+            type: image
+            list: true
+            description: "Dans l'ordre d'affichage. Format 4:5."
+          - name: placeholders
+            label: Rectangles gris (si pas encore de photos)
+            type: number
+            description: "Nombre de rectangles gris affichés tant qu'il n'y a pas de photos. Laisse vide sinon."
 
   - name: site
     label: À propos et contact
