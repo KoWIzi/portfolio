@@ -60,5 +60,15 @@
       "/images/3-3.jpg"
     ],
     "placeholders": 0
+  },
+  {
+    "title": "Slime Legacy ",
+    "year": 2025,
+    "type_fr": "Jeu vidéo",
+    "type_en": "Vidéo game ",
+    "text_fr": "Slime Legacy est un jeu de plateforme en pixel art, en développement sous Godot. On y incarne un slime dont la masse est la vie : on se divise pour avancer, on se réabsorbe pour survivre.",
+    "images": [
+      "/images/01titre.png"
+    ]
   }
 ]
