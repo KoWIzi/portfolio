@@ -66,8 +66,8 @@
     "year": 2025,
     "type_fr": "Jeu vidéo",
     "type_en": "Vidéo game ",
-    "text_fr": "Slime Legacy est un jeu de plateforme en pixel art que je développe sous Godot. On y incarne un petit slime dont la masse est la vie : pas de barre de vie, tout se lit sur le personnage. Pour avancer, il dépose des morceaux de lui-même qui deviennent des appuis, saute dessus puis les réabsorbe pour reprendre des forces. Le jeu est en cours de développement.",
-    "text_en": "Slime Legacy is a pixel art platformer I'm developing using Godot. You play as a little slime whose mass is its lifeblood: there's no health bar, everything is displayed on the character. To move forward, it drops pieces of itself that become platforms, jumps on them, and then reabsorbs them to regain strength. The game is currently in development.",
+    "text_fr": "Slime Legacy est un jeu de plateforme et de puzzle en pixel art que je développe sous Godot. On y incarne un petit slime dont la masse est la vie : pas de barre de vie, tout se lit sur le personnage. Pour avancer, il dépose des morceaux de lui-même qui deviennent des appuis, saute dessus puis les réabsorbe pour reprendre des forces. Le jeu est en cours de développement.",
+    "text_en": "Slime Legacy is a pixel-art puzzle-platformer that I am developing using Godot. You play as a small slime whose mass represents its life force—there is no health bar; everything is reflected in the character itself. To progress, the slime leaves behind pieces of its own body that serve as platforms; it can then jump onto them and reabsorb them to regain its strength. The game is currently in development.",
     "images": [
       "/images/01titre.png",
       "/images/02presentationmasse-1.mp4",
