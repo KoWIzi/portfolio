@@ -56,7 +56,7 @@ body.in-gallery .tr,body.in-gallery .br{opacity:0;pointer-events:none}
 .slide.in{opacity:1}
 .ph{width:100%;height:100%;background:var(--ph);display:grid;place-items:center;outline:1px solid var(--ph-line);outline-offset:-1px;text-align:center;font-size:13px}
 .ph span{opacity:.6}
-.slide img{width:100%;height:100%;object-fit:cover;display:block}
+.slide img,.slide video{width:100%;height:100%;object-fit:cover;display:block}
 
 .caption{position:absolute;top:calc(100% + 14px);left:0;display:grid;grid-auto-flow:column;column-gap:32px;align-items:baseline;white-space:nowrap}
 .caption .t{text-transform:none;letter-spacing:0}
@@ -108,7 +108,7 @@ body.in-gallery .tr,body.in-gallery .br{opacity:0;pointer-events:none}
 .thumb{cursor:pointer;transition:opacity .2s}
 .grid:hover .thumb{opacity:.3}
 .grid:hover .thumb.hot{opacity:1}
-.thumb .ph,.thumb img{aspect-ratio:4/5;width:100%;height:auto;object-fit:cover}
+.thumb .ph,.thumb img,.thumb video{aspect-ratio:4/5;width:100%;height:auto;object-fit:cover}
 .thumb .ph{font-size:11px}
 .note-cell{cursor:pointer;aspect-ratio:4/5;display:flex;align-items:flex-start;transition:opacity .2s}
 .grid:hover .note-cell{opacity:.3}
@@ -194,7 +194,9 @@ const cursor=$("#cursor");
 const corners={"#about":["#btn-about",()=>"B. Mouquet"],"#index":["#btn-index",()=>ui[lang].index],"#gallery":["#btn-gallery",()=>ui[lang].gallery]};
 
 function count(){const n=projects[p].imgs;return (n===1&&NEXT_FOR_SINGLE)?ui[lang].next:`${i+1}/${n}`}
+const isVideo=u=>/\.(mp4|webm|mov)(\?|$)/i.test(u);
 function media(pr,k,cls=""){const src=pr.images&&pr.images[k];
+  if(src&&isVideo(src))return `<video src="${src}" autoplay muted loop playsinline preload="metadata" aria-label="${pr.title}, ${ui[lang].img} ${k+1}"></video>`;
   return src?`<img src="${src}" alt="${pr.title}, ${ui[lang].img} ${k+1}" loading="lazy">`:`<div class="ph ${cls}"><span>${pr.title}<br>${ui[lang].img} ${k+1}/${pr.imgs}</span></div>`}
 
 /* largeur fixe de chaque colonne de la légende = le mot le plus long, FR et EN */

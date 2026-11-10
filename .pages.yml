@@ -40,10 +40,12 @@ content:
         label: Description (anglais)
         type: text
       - name: images
-        label: Photos
-        type: image
+        label: Photos et vidéos
+        type: file
         list: true
-        description: "Dans l'ordre d'affichage. Format 4:5."
+        options:
+          extensions: [jpg, jpeg, png, webp, gif, mp4, webm, mov]
+        description: "Dans l'ordre d'affichage. Format 4:5. Vidéos en .mp4, idéalement moins de 20 Mo (lues en boucle, sans son)."
       - name: placeholders
         label: Rectangles gris (si pas encore de photos)
         type: number
