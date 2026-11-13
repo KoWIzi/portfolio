@@ -27,6 +27,21 @@
     "placeholders": 0
   },
   {
+    "title": "Slime Legacy ",
+    "year": 2025,
+    "type_fr": "Jeu vidéo",
+    "type_en": "Vidéo game ",
+    "text_fr": "Slime Legacy est un jeu de plateforme et de puzzle en pixel art que je développe sous Godot. On y incarne un petit slime dont la masse est la vie : pas de barre de vie, tout se lit sur le personnage. Pour avancer, il dépose des morceaux de lui-même qui deviennent des appuis, saute dessus puis les réabsorbe pour reprendre des forces. Le jeu est en cours de développement.",
+    "text_en": "Slime Legacy is a pixel-art puzzle-platformer that I am developing using Godot. You play as a small slime whose mass represents its life force—there is no health bar; everything is reflected in the character itself. To progress, the slime leaves behind pieces of its own body that serve as platforms; it can then jump onto them and reabsorb them to regain its strength. The game is currently in development.",
+    "images": [
+      "/images/01titre.png",
+      "/images/02presentationmasse-1.mp4",
+      "/images/03idlesaut-1.mp4",
+      "/images/04etats-1.mp4",
+      "/images/05gameplay.mp4"
+    ]
+  },
+  {
     "title": "Vitraux et Biomatériaux",
     "year": 2025,
     "type_fr": "Photographie",
@@ -55,18 +70,17 @@
     "placeholders": 0
   },
   {
-    "title": "Slime Legacy ",
+    "title": "La vie est dure",
     "year": 2025,
-    "type_fr": "Jeu vidéo",
-    "type_en": "Vidéo game ",
-    "text_fr": "Slime Legacy est un jeu de plateforme et de puzzle en pixel art que je développe sous Godot. On y incarne un petit slime dont la masse est la vie : pas de barre de vie, tout se lit sur le personnage. Pour avancer, il dépose des morceaux de lui-même qui deviennent des appuis, saute dessus puis les réabsorbe pour reprendre des forces. Le jeu est en cours de développement.",
-    "text_en": "Slime Legacy is a pixel-art puzzle-platformer that I am developing using Godot. You play as a small slime whose mass represents its life force—there is no health bar; everything is reflected in the character itself. To progress, the slime leaves behind pieces of its own body that serve as platforms; it can then jump onto them and reabsorb them to regain its strength. The game is currently in development.",
+    "type_fr": "Jeu de société & application web",
+    "type_en": "Board game & web application",
+    "text_fr": "Adaptation du jeu de déduction sociale Blood on the Clocktower à la vie d’un lycée : les Élèves et les Cancres affrontent la Direction, menée en secret par le Proviseur. J’ai inventé l’univers, les rôles et le et adapter les règles. J’ai aussi conçu le logiciel du maître du jeu, qui imite l’interface de Pronote. Il guide le MJ pas à pas, affiche les annonces sur l’écran de la classe et permet aux joueurs de jouer depuis leur téléphone.",
+    "text_en": "An adaptation of the social deduction game *Blood on the Clocktower* set in a high school: students and slackers face off against the school administration, which is secretly led by the Principal. I created the setting, the roles, and adapted the rules. I also developed software for the Game Master that mimics the interface of *Pronote* (a common French school management platform). It guides the GM step-by-step, displays announcements on the classroom screen, and allows players to participate using their own phones.",
     "images": [
-      "/images/01titre.png",
-      "/images/02presentationmasse-1.mp4",
-      "/images/03idlesaut-1.mp4",
-      "/images/04etats-1.mp4",
-      "/images/05gameplay.mp4"
+      "/images/2-5.jpg",
+      "/images/3-5.jpg",
+      "/images/4-4.jpg",
+      "/images/5-2.jpg"
     ]
   }
 ]
